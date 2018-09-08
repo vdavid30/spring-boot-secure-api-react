@@ -6,15 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import javax.servlet.ServletException;
-
+import java.util.Date;
 /**
  * @author Santiago Carrillo
  * 8/21/17.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping( "user" )
 public class UserController
 {
@@ -51,8 +56,8 @@ public class UserController
             throw new ServletException( "Invalid login. Please check your name and password." );
         }
 
-//        jwtToken = Jwts.builder().setSubject( username ).claim( "roles", "user" ).setIssuedAt( new Date() ).signWith(
-//            SignatureAlgorithm.HS256, "secretkey" ).compact();
+        jwtToken = Jwts.builder().setSubject( username ).claim( "roles", "user" ).setIssuedAt( new Date() ).signWith(
+            SignatureAlgorithm.HS256, "secretkey" ).compact();
 
         return new Token( jwtToken );
     }
