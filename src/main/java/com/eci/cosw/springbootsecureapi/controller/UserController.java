@@ -19,14 +19,13 @@ import java.util.Date;
  * 8/21/17.
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping( "user" )
 public class UserController
 {
 
     @Autowired
     private UserService userService;
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping( value = "/login", method = RequestMethod.POST )
     public Token login( @RequestBody User login )
         throws ServletException
@@ -42,7 +41,7 @@ public class UserController
         String username = login.getUsername();
         String password = login.getPassword();
 
-        User user = userService.getUser( 0l );
+        User user = userService.findUserByUsername(username);
 
         if ( user == null )
         {

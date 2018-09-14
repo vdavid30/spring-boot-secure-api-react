@@ -28,7 +28,9 @@ public class UserServiceImpl
     @PostConstruct
     private void populateSampleData()
     {
-        users.add( new User( "test@mail.com", "password", "Andres", "Perez" ) );
+        users.add( new User(
+                "david@gmail.com", "david", "David"
+                , "Vaca", "vdavid30" ) );
     }
 
 
@@ -39,27 +41,34 @@ public class UserServiceImpl
     }
 
     @Override
-    public User getUser( Long id )
+    public User getUser( int id )
     {
-        return users.get( 0 );
+        return users.get(id);
     }
 
     @Override
-    public User createUser( User user )
-    {
-        return users.get( 0 );
-    }
+    public void createUser( User user )  { users.add(user); }
 
     @Override
-    public User findUserByEmail( String email )
-    {
-        return users.get( 0 );
+    public User findUserByUsername(String username) {
+        for(User user: users){
+            if(user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        return null;
     }
+
 
     @Override
     public User findUserByEmailAndPassword( String email, String password )
     {
-        return users.get( 0 );
+        for(User user: users){
+            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+                return user;
+            }
+        }
+        return null;
     }
 
 }
